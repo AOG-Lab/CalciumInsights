@@ -3,14 +3,15 @@
 CalciumInsights is an interactive application built in R designed to analyze tissue-agnostic calcium traces.
 
 
+![image](figures/CI_description.png)
 
 # Installation
 
-To install CalciumInsights R and RStudio are required: 
+To install CalciumInsights R and RStudio are required:
 
-<https://cran.r-project.org/> 
+<https://cran.r-project.org/>
 
-<https://posit.co/download/rstudio-desktop/> 
+<https://posit.co/download/rstudio-desktop/>
 
 ## Packages
 
