@@ -15,8 +15,30 @@ To install CalciumInsights R and RStudio are required:
 
 ## Packages
 
-1. **GOLEM**
-2. **SHYNY**
+```{r}
+config (>= 0.3.1)
+golem (>= 0.3.2)
+shiny (>= 1.7.2)
+shinydashboard
+shinyjs
+ggplot2
+DT
+gridExtra
+mdatools
+pracma
+tidyverse
+dplyr
+reshape2
+refund
+fda
+fds
+reshape2
+latex2exp
+plotly
+magrittr
+png
+prospectr
+```
 
 ## How to install the app
 
