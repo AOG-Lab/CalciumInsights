@@ -48,7 +48,7 @@ install.packages("remotes")
 ```
 ### The following console command is to install from github
 ```
-remotes::install_github("EMBRIOInstitute/CalciumInsights", auth_token = "your GitHub token")(FIXME)
+remotes::install_github("AOG-Lab/CalciumInsights", auth_token = "your GitHub token")
 ```
 ## Example
 
