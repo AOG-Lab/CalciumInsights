@@ -2,73 +2,312 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Shiny app</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CalciumInsights</title>
+
   <style>
+    :root {
+      --primary-color: #337ab7;
+      --secondary-color: #66CCCC;
+      --dark-color: #1f2933;
+      --text-color: #4b5563;
+      --light-bg: #f5f8fb;
+      --card-bg: #ffffff;
+      --border-color: #dbeafe;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-      background-color: #f5f5f5; /* Light blue background color */
-      color: #000; /* Black text color */
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, #f5f8fb 0%, #eaf6f8 100%);
+      color: var(--text-color);
     }
-    h1 {
-      color: #333;
+
+    .page-wrapper {
+      min-height: 100vh;
+      padding: 40px 24px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
     }
-    .text-container {
-      margin: 40px;
-      border: 2px solid #66CCCC; /* blue border */
-      padding: 20px; /* Internal spacing */
+
+    .home-card {
+      width: 100%;
+      max-width: 1100px;
+      background: var(--card-bg);
+      border-radius: 22px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      border: 1px solid var(--border-color);
     }
-    p {
-      color: #666;
+
+    .hero {
+      padding: 45px 50px;
+      text-align: center;
+      background: linear-gradient(135deg, #ffffff 0%, #eef9fb 100%);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .logo {
+      max-width: 180px;
+      height: auto;
+      display: block;
+      margin: 0 auto 20px auto;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: 42px;
+      color: var(--dark-color);
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .hero .subtitle {
+      margin: 15px auto 0 auto;
+      max-width: 800px;
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--text-color);
+    }
+
+    .content {
+      padding: 40px 50px 50px 50px;
+    }
+
+    .section-title {
+      color: var(--dark-color);
+      font-size: 26px;
+      margin-top: 0;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .description {
+      max-width: 900px;
+      margin: 0 auto 35px auto;
+      font-size: 17px;
+      line-height: 1.8;
       text-align: justify;
     }
-    .center {
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-top: 30px;
+    }
+
+    .feature-card {
+      background: #f9fcff;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
       text-align: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .logo {
-      max-width: 250px;
-      height: auto;
-      display: block;
-      margin: 10px auto;
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(51, 122, 183, 0.12);
     }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      margin: 0 auto 14px auto;
+      border-radius: 50%;
+      background: rgba(102, 204, 204, 0.2);
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    .feature-card h3 {
+      margin: 8px 0 10px 0;
+      color: var(--dark-color);
+      font-size: 19px;
+    }
+
+    .feature-card p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text-color);
+    }
+
+    .workflow-box {
+      margin-top: 42px;
+      background: #f3fbfc;
+      border-left: 5px solid var(--secondary-color);
+      border-radius: 14px;
+      padding: 25px 30px;
+    }
+
+    .workflow-box h2 {
+      margin-top: 0;
+      color: var(--dark-color);
+      font-size: 24px;
+    }
+
+    .workflow-box ol {
+      margin-bottom: 0;
+      padding-left: 22px;
+      line-height: 1.8;
+      font-size: 16px;
+    }
+
+    .cta-box {
+      margin-top: 40px;
+      padding: 28px;
+      text-align: center;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #337ab7 0%, #66CCCC 100%);
+      color: #ffffff;
+    }
+
+    .cta-box h2 {
+      margin: 0 0 10px 0;
+      font-size: 26px;
+    }
+
+    .cta-box p {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #ffffff;
+    }
+
     .footer {
-      position: fixed;
-      left: 0;
-      bottom: 0;
-      width: 100%;
+      padding: 18px 30px;
       text-align: center;
-      background-color: #f5f5f5;
-      padding: 10px 0;
+      font-size: 13px;
+      color: #6b7280;
+      background: #f8fafc;
+      border-top: 1px solid var(--border-color);
     }
 
-    .footer img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin: 0 auto;
+    @media (max-width: 900px) {
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 35px 25px;
+      }
+
+      .hero h1 {
+        font-size: 34px;
+      }
+
+      .content {
+        padding: 30px 25px 40px 25px;
+      }
     }
 
-    /* Media query to adjust footer on smaller screens */
-    @media (max-width: 768px) {
-      footer {
-        padding: 5px 0; /* Change spacing on smaller screens */
+    @media (max-width: 600px) {
+      .page-wrapper {
+        padding: 20px 12px;
+      }
+
+      .hero h1 {
+        font-size: 28px;
+      }
+
+      .hero .subtitle {
+        font-size: 16px;
+      }
+
+      .description {
+        font-size: 15px;
       }
     }
   </style>
 </head>
+
 <body>
-  <div class="center">
-    <img src="images/logo.png" alt="Application logo" class="logo">
-    <h1>Welcome to CalciumInsights</h1>
-    <div class="text-container">
-      <p>
-        Our CalciumInsights application focuses on the analysis of calcium signal metrics, providing a comprehensive set of tools for exploring, visualizing, and analyzing these metrics interactively. The user-friendly interface enables users to investigate key parameters of signal dynamics, such as peak amplitudes, durations, and other critical aspects. This allows for the generation of visual representations and the performance of detailed analyses to gain a better understanding of the complex behavior of calcium signals.
-      </p>
-    </div>
-  </div>
-  <div class="footer">
-    <!-- <img src="images/footer_image.png" alt="Footer Image" width="2000px"> -->
-  </div>
+  <main class="page-wrapper">
+    <section class="home-card">
+
+      <header class="hero">
+        <img src="images/logo.png" alt="CalciumInsights logo" class="logo">
+
+        <h1>Welcome to CalciumInsights</h1>
+
+        <p class="subtitle">
+          An interactive platform for denoising, visualizing, and quantifying calcium transient signals.
+        </p>
+      </header>
+
+      <section class="content">
+        <h2 class="section-title">About the Application</h2>
+
+        <p class="description">
+          CalciumInsights is designed to support the analysis of calcium imaging signals through an interactive and user-friendly interface. 
+          The application allows users to upload calcium signal datasets, select specific regions of interest, apply signal smoothing methods, 
+          detect calcium transients, and extract relevant quantitative metrics such as peak amplitude, prominence, rise time, transient duration, 
+          full width at half maximum, and area under the curve.
+        </p>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">1</div>
+            <h3>Signal Denoising</h3>
+            <p>
+              Smooth calcium traces using frequency-based filtering methods while preserving the main morphology of the signal.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">2</div>
+            <h3>Transient Detection</h3>
+            <p>
+              Identify relevant peaks and calcium events using configurable parameters such as peak height, prominence, and minimum distance.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">3</div>
+            <h3>Metric Extraction</h3>
+            <p>
+              Generate quantitative summaries for calcium dynamics, including amplitude, rise time, FWHM, FWHP, AUC, and frequency-related metrics.
+            </p>
+          </div>
+        </div>
+
+        <div class="workflow-box">
+          <h2>Recommended Workflow</h2>
+
+          <ol>
+            <li>Upload your calcium signal dataset or use the example data provided in the app.</li>
+            <li>Select the region of interest that you want to analyze.</li>
+            <li>Adjust the denoising and peak detection parameters according to your signal behavior.</li>
+            <li>Review the calcium trace, detected peaks, derivative plots, and raw-versus-smoothed comparison.</li>
+            <li>Download the transient metrics, trace metrics, or calcium trace graph for reporting and further analysis.</li>
+          </ol>
+        </div>
+
+        <div class="cta-box">
+          <h2>Start Your Analysis</h2>
+          <p>
+            Use the navigation menu above and open the <strong>FFT Denoising Analysis</strong> section to begin analyzing your calcium traces.
+          </p>
+        </div>
+      </section>
+
+      <footer class="footer">
+        CalciumInsights — Calcium Transient Analysis App
+      </footer>
+
+    </section>
+  </main>
 </body>
 </html>
-
