@@ -32,7 +32,7 @@ Before installing CalciumInsights from GitHub, make sure the following programs 
 
 Download and install R from:
 
-<https://cran.r-project.org/>
+<[https://cran.r-project.org/](https://aog-lab.github.io/fft-denoising-app-user-guide/)>
 
 ### 2. RStudio
 
