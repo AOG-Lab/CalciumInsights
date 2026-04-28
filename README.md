@@ -168,6 +168,16 @@ The current version of CalciumInsights focuses on FFT-based denoising and calciu
 
 ---
 
+## User Guide
+
+A detailed user guide for CalciumInsights is available at:
+
+<https://github.com/AOG-Lab/fft-denoising-app-user-guide>
+
+This guide provides additional information about how to use the application, including data upload, FFT-based denoising, parameter selection, calcium transient detection, metric interpretation, and result export.
+
+---
+
 ## Citation
 
 If you use CalciumInsights in your research, please cite the application or related manuscript when available.
