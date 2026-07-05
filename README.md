@@ -2,11 +2,13 @@
 
 **CalciumInsights** is a modular R Shiny application for post-processing, visualization, event detection, baseline-sensitivity analysis, and quantification of calcium-imaging time-series data.
 
-This repository is organized as a [`golem`](https://thinkr-open.github.io/golem/) R package. It can be opened directly in RStudio for development, run from the downloaded source folder, installed as a local R package, or installed from GitHub.
+The application is distributed as a `golem` R package and can be installed directly on a Windows, macOS, or Linux laptop from the official GitHub repository:
+
+**https://github.com/AOG-Lab/CalciumInsights**
 
 ## Active analysis modules
 
-### 1. FFT + Baseline Analysis
+### FFT + Baseline Analysis
 
 - FFT low-pass denoising
 - Peak detection
@@ -17,7 +19,7 @@ This repository is organized as a [`golem`](https://thinkr-open.github.io/golem/
 - Optional sigmoidal models
 - Downloadable tables and plots
 
-### 2. Wavelet Ridgewalking
+### Wavelet Ridgewalking
 
 - Multiscale Ricker/Mexican-hat wavelet analysis
 - Ridge construction and filtering
@@ -27,51 +29,214 @@ This repository is organized as a [`golem`](https://thinkr-open.github.io/golem/
 - Optional sigmoidal models
 - Downloadable tables and plots
 
-`R/mod_method_comparison.R` is retained from the source application, but the method-comparison module is currently disabled in the user interface and server.
+`R/mod_method_comparison.R` is retained in the source code, but the method-comparison module is currently disabled in the user interface and server.
 
 ---
 
-# 1. System requirements
+# 1. Install CalciumInsights directly from GitHub
 
-## Required software
+This is the recommended installation method for most users. It installs CalciumInsights and its R package dependencies directly on the local laptop. The repository does not need to be downloaded or cloned manually.
 
-Install the following software before installing the R packages:
+## Step 1 — Install R
 
-1. **R version 4.1.0 or later**  
-   Download R from the official CRAN website:  
-   <https://cran.r-project.org/>
+Install **R version 4.1.0 or later** from:
 
-2. **RStudio Desktop** — recommended  
-   Download the free desktop version from:  
-   <https://posit.co/download/rstudio-desktop/>
+<https://cran.r-project.org/>
 
-3. **An internet connection**  
-   It is needed during the first installation of R packages.
+To check the installed R version, open R or RStudio and run:
 
-Git is optional. It is only required when cloning the repository with `git clone`. The project can also be downloaded from GitHub as a ZIP file.
+```r
+R.version.string
+```
 
-No Python, Java, or MATLAB installation is required.
+## Step 2 — Install RStudio Desktop
 
-## Optional system build tools
+RStudio is recommended for running CalciumInsights locally:
 
-Most Windows and macOS users receive precompiled R packages and will not need additional tools. Install the tools below only when R reports that a package must be compiled from source.
+<https://posit.co/download/rstudio-desktop/>
 
-### Windows
+After installing R and RStudio, open **RStudio Desktop**.
 
-Install the version of **Rtools** that matches your installed R version:
+## Step 3 — Install CalciumInsights
+
+Copy the complete block below into the **RStudio Console** and press Enter:
+
+```r
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+
+if (!requireNamespace("remotes", quietly = TRUE)) {
+  install.packages("remotes")
+}
+
+remotes::install_github(
+  repo = "AOG-Lab/CalciumInsights",
+  dependencies = TRUE,
+  upgrade = "never"
+)
+```
+
+This command downloads the package source from the official GitHub repository and installs CalciumInsights and its dependencies into the local R library.
+
+The installation may print many messages in the console. Warnings about packages being built are not necessarily errors. The installation is complete when the R prompt (`>`) appears again without an error message.
+
+## Step 4 — Run CalciumInsights
+
+After the installation is complete, run:
+
+```r
+CalciumInsights::run_app()
+```
+
+The application should open in the RStudio Viewer or in the default web browser.
+
+To stop the application:
+
+- Click **Stop** in RStudio, or
+- Press the **Esc** key while the R console is active.
+
+---
+
+# 2. Open CalciumInsights after the first installation
+
+The package only needs to be installed once. During later RStudio sessions, start the application with:
+
+```r
+CalciumInsights::run_app()
+```
+
+Alternatively:
+
+```r
+library(CalciumInsights)
+run_app()
+```
+
+An internet connection is not normally required after the application and all dependencies have been installed, unless the application is updated or additional packages are needed.
+
+---
+
+# 3. Update CalciumInsights from GitHub
+
+To replace an older local installation with the latest version available in the repository, run:
+
+```r
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+
+if (!requireNamespace("remotes", quietly = TRUE)) {
+  install.packages("remotes")
+}
+
+remotes::install_github(
+  repo = "AOG-Lab/CalciumInsights",
+  dependencies = TRUE,
+  upgrade = "never",
+  force = TRUE
+)
+```
+
+Restart R after updating:
+
+```text
+RStudio > Session > Restart R
+```
+
+Then run:
+
+```r
+CalciumInsights::run_app()
+```
+
+To check the installed package version:
+
+```r
+packageVersion("CalciumInsights")
+```
+
+To locate the installed package on the laptop:
+
+```r
+find.package("CalciumInsights")
+```
+
+---
+
+# 4. Remove CalciumInsights
+
+To uninstall CalciumInsights from the local R library:
+
+```r
+remove.packages("CalciumInsights")
+```
+
+Restart RStudio after removing the package.
+
+---
+
+# 5. Required R packages
+
+When CalciumInsights is installed with:
+
+```r
+remotes::install_github(
+  "AOG-Lab/CalciumInsights",
+  dependencies = TRUE
+)
+```
+
+R installs the declared package dependencies automatically.
+
+The application uses the following main R packages:
+
+| Package | Purpose |
+|---|---|
+| `config` | Application configuration |
+| `golem` | Shiny package framework |
+| `shiny` | Web application framework |
+| `shinyjs` | JavaScript utilities for Shiny |
+| `DT` | Interactive data tables |
+| `ggplot2` | Plotting |
+| `dplyr` | Data manipulation |
+| `vroom` | CSV and TSV import |
+| `jsonlite` | JSON import |
+| `pracma` | Peak detection and numerical functions |
+| `prospectr` | Savitz–Golay filtering |
+| `latex2exp` | Mathematical expressions in plots |
+| `gridExtra` | Arrangement of multiple plots |
+| `htmltools` | HTML components used by the interface |
+
+The minimum versions explicitly required by the package include:
+
+- R >= 4.1.0
+- `config` >= 0.3.1
+- `golem` >= 0.3.2
+- `shiny` >= 1.7.2
+
+Packages such as `pkgload`, `testthat`, and `devtools` are development tools. They are not required simply to start the installed application with `CalciumInsights::run_app()`.
+
+---
+
+# 6. Optional system build tools
+
+Most Windows and macOS users receive precompiled R packages and do not need additional build tools. Install the appropriate tool only when R reports that a package must be compiled from source.
+
+## Windows
+
+Install the version of **Rtools** that matches the installed R version:
 
 <https://cran.r-project.org/bin/windows/Rtools/>
 
-After installing Rtools, restart RStudio and verify it with:
+Restart RStudio after installing Rtools.
+
+To verify the installation:
 
 ```r
 install.packages("pkgbuild")
 pkgbuild::has_build_tools(debug = TRUE)
 ```
 
-### macOS
+## macOS
 
-Install the Apple Command Line Tools from the macOS Terminal:
+Open the macOS Terminal and install the Apple Command Line Tools:
 
 ```bash
 xcode-select --install
@@ -79,9 +244,9 @@ xcode-select --install
 
 Restart RStudio after the installation finishes.
 
-### Ubuntu or Debian Linux
+## Ubuntu or Debian Linux
 
-Install R development tools and commonly required system libraries in a terminal:
+Run the following commands in a terminal:
 
 ```bash
 sudo apt update
@@ -94,352 +259,15 @@ sudo apt install -y \
   libxml2-dev
 ```
 
-R 4.1.0 or later is required. On older Linux distributions, follow the current CRAN instructions for installing a recent R version.
+Make sure that the installed R version is 4.1.0 or later.
 
 ---
 
-# 2. R package dependencies
+# 7. Alternative installation for developers
 
-The project includes an installation script named `install_dependencies.R`. This is the recommended way to install all required packages.
+The direct GitHub installation described above is recommended for users who only need to run the application. Developers who want to inspect or modify the source code can clone or download the repository.
 
-## Packages required to run the application
-
-| Package | Purpose |
-|---|---|
-| `config` | Application configuration |
-| `golem` | Shiny package framework |
-| `shiny` | Web application framework |
-| `shinyjs` | JavaScript utilities for Shiny |
-| `DT` | Interactive data tables |
-| `ggplot2` | Plotting |
-| `dplyr` | Data manipulation |
-| `vroom` | Fast CSV and TSV import |
-| `jsonlite` | JSON import |
-| `pracma` | Peak detection and numerical functions |
-| `prospectr` | Savitzky–Golay filtering |
-| `latex2exp` | Mathematical expressions in plots |
-| `gridExtra` | Arrangement of multiple plots |
-| `htmltools` | HTML elements used by the interface |
-
-The minimum versions explicitly required by the package are:
-
-- R >= 4.1.0
-- `config` >= 0.3.1
-- `golem` >= 0.3.2
-- `shiny` >= 1.7.2
-
-## Packages used for local development, installation, and testing
-
-| Package | Purpose |
-|---|---|
-| `pkgload` | Loads the package directly from its source folder |
-| `testthat` | Runs automated tests |
-| `remotes` | Installs the package locally or from GitHub |
-| `httpuv` | Local Shiny web server support |
-
-`devtools` is optional. Install it only when you plan to document, test, build, or check the package during development.
-
----
-
-# 3. Recommended installation: download the project and run it in RStudio
-
-This method is recommended for first-time users and for local development.
-
-## Step 1 — Download and extract the project
-
-From GitHub:
-
-1. Open the repository page.
-2. Select **Code**.
-3. Select **Download ZIP**.
-4. Extract the ZIP file to a normal folder on the laptop.
-
-Do not run the project while it is still inside the compressed ZIP archive.
-
-A suitable location is, for example:
-
-```text
-Windows: C:/Users/YourName/Documents/CalciumInsights
-macOS:   /Users/YourName/Documents/CalciumInsights
-Linux:   /home/YourName/CalciumInsights
-```
-
-Avoid placing the project in a temporary folder.
-
-## Step 2 — Open the RStudio project
-
-Open this file:
-
-```text
-CalciumInsights.Rproj
-```
-
-RStudio should open with the project folder as the working directory. In the **Files** pane, confirm that at least these files are visible:
-
-```text
-DESCRIPTION
-app.R
-install_dependencies.R
-R/
-inst/
-```
-
-You can verify the working directory in the R console:
-
-```r
-getwd()
-file.exists("DESCRIPTION")
-file.exists("app.R")
-```
-
-Both `file.exists()` calls should return `TRUE`.
-
-## Step 3 — Select a CRAN repository
-
-Run this command in the RStudio console:
-
-```r
-options(repos = c(CRAN = "https://cloud.r-project.org"))
-```
-
-## Step 4 — Install all required R packages
-
-Run:
-
-```r
-source("install_dependencies.R")
-```
-
-The script checks which packages are missing and installs only those packages.
-
-It installs:
-
-```r
-c(
-  "config",
-  "golem",
-  "shiny",
-  "shinyjs",
-  "DT",
-  "ggplot2",
-  "dplyr",
-  "vroom",
-  "jsonlite",
-  "pracma",
-  "prospectr",
-  "latex2exp",
-  "gridExtra",
-  "htmltools",
-  "pkgload",
-  "testthat",
-  "remotes",
-  "httpuv"
-)
-```
-
-Package installation is normally required only once for each R library.
-
-## Step 5 — Run the application
-
-Use either of the following methods.
-
-### Method A: run through `app.R`
-
-```r
-shiny::runApp()
-```
-
-### Method B: run through the development launcher
-
-```r
-source("dev/run_dev.R")
-```
-
-The application should open in the RStudio Viewer or in the default web browser.
-
-To stop the application, click **Stop** in RStudio or press the **Esc** key in the console.
-
----
-
-# 4. Manual dependency installation
-
-Use this method only when `source("install_dependencies.R")` does not complete successfully.
-
-```r
-options(repos = c(CRAN = "https://cloud.r-project.org"))
-
-install.packages(
-  c(
-    "config",
-    "golem",
-    "shiny",
-    "shinyjs",
-    "DT",
-    "ggplot2",
-    "dplyr",
-    "vroom",
-    "jsonlite",
-    "pracma",
-    "prospectr",
-    "latex2exp",
-    "gridExtra",
-    "htmltools",
-    "pkgload",
-    "testthat",
-    "remotes",
-    "httpuv"
-  ),
-  dependencies = TRUE
-)
-```
-
-Check whether any package is still missing:
-
-```r
-required_packages <- c(
-  "config",
-  "golem",
-  "shiny",
-  "shinyjs",
-  "DT",
-  "ggplot2",
-  "dplyr",
-  "vroom",
-  "jsonlite",
-  "pracma",
-  "prospectr",
-  "latex2exp",
-  "gridExtra",
-  "htmltools",
-  "pkgload",
-  "testthat",
-  "remotes",
-  "httpuv"
-)
-
-missing_packages <- required_packages[
-  !vapply(
-    required_packages,
-    requireNamespace,
-    logical(1),
-    quietly = TRUE
-  )
-]
-
-missing_packages
-```
-
-An empty character vector means that all dependencies are installed:
-
-```text
-character(0)
-```
-
----
-
-# 5. Install CalciumInsights as a local R package
-
-This method installs CalciumInsights into the user's R library. The app can then be started from any working directory.
-
-Open `CalciumInsights.Rproj`, then run:
-
-```r
-install.packages("remotes")
-
-remotes::install_local(
-  path = ".",
-  dependencies = TRUE,
-  upgrade = "never",
-  force = TRUE
-)
-```
-
-Start the installed application with:
-
-```r
-CalciumInsights::run_app()
-```
-
-To confirm that the package is installed:
-
-```r
-packageVersion("CalciumInsights")
-find.package("CalciumInsights")
-```
-
-To remove the installed package:
-
-```r
-remove.packages("CalciumInsights")
-```
-
----
-
-# 6. Install CalciumInsights directly from GitHub
-
-After the repository has been published on GitHub, install it with:
-
-```r
-options(repos = c(CRAN = "https://cloud.r-project.org"))
-install.packages("remotes")
-
-remotes::install_github(
-  repo = "AOG-Lab/CalciumInsights",
-  dependencies = TRUE,
-  upgrade = "never"
-)
-```
-
-Then run:
-
-```r
-CalciumInsights::run_app()
-```
-
-When the repository owner or repository name is different, replace:
-
-```text
-AOG-Lab/CalciumInsights
-```
-
-with:
-
-```text
-OWNER/REPOSITORY
-```
-
-## Update an existing GitHub installation
-
-```r
-remotes::install_github(
-  repo = "AOG-Lab/CalciumInsights",
-  dependencies = TRUE,
-  upgrade = "never",
-  force = TRUE
-)
-```
-
-Restart R after updating the package, then run:
-
-```r
-CalciumInsights::run_app()
-```
-
-## Install a specific branch
-
-```r
-remotes::install_github(
-  repo = "AOG-Lab/CalciumInsights@branch-name",
-  dependencies = TRUE,
-  upgrade = "never"
-)
-```
-
----
-
-# 7. Clone the repository with Git
-
-This method is optional.
+## Clone with Git
 
 Install Git from:
 
@@ -459,6 +287,22 @@ source("install_dependencies.R")
 shiny::runApp()
 ```
 
+## Download the source as a ZIP file
+
+1. Open <https://github.com/AOG-Lab/CalciumInsights>.
+2. Select **Code**.
+3. Select **Download ZIP**.
+4. Extract the ZIP file.
+5. Open `CalciumInsights.Rproj` in RStudio.
+6. Run:
+
+```r
+source("install_dependencies.R")
+shiny::runApp()
+```
+
+Do not run the project while it is still inside the compressed ZIP archive.
+
 ---
 
 # 8. Input data format
@@ -468,12 +312,12 @@ The application accepts:
 - `.csv`
 - `.tsv`
 
-The expected structure is:
+The expected file structure is:
 
 - The first column contains time values.
 - Each additional column contains one calcium signal or region-of-interest trace.
 - Column names should be unique.
-- Values used for analysis should be numeric.
+- Analysis columns should contain numeric values.
 - Missing or nonnumeric values should be reviewed before analysis.
 
 Example:
@@ -485,23 +329,17 @@ Time,ROI_1,ROI_2,ROI_3
 0.20,0.111,0.125,0.101
 ```
 
-CalciumInsights analyzes already extracted time-series traces. It does not segment microscopy images or extract regions of interest from raw image files.
+CalciumInsights analyzes already extracted time-series traces. It does not segment microscopy images or extract regions of interest from raw microscopy images.
 
 ## Example data
 
-Example files are included in:
-
-```text
-inst/extdata/
-```
-
-After installing the package, locate them with:
+After installing the package, locate the included example files with:
 
 ```r
 system.file("extdata", package = "CalciumInsights")
 ```
 
-List the example files with:
+List all example files with:
 
 ```r
 list.files(
@@ -512,50 +350,153 @@ list.files(
 
 ---
 
-# 9. Project structure
+# 9. Troubleshooting
 
-```text
-CalciumInsights/
-├── app.R
-├── CalciumInsights.Rproj
-├── DESCRIPTION
-├── NAMESPACE
-├── install_dependencies.R
-├── R/
-│   ├── app_ui.R
-│   ├── app_server.R
-│   ├── run_app.R
-│   ├── mod_fft_baseline_sensitivity.R
-│   ├── mod_wavelet_ridgewalking.R
-│   ├── mod_method_comparison.R
-│   └── utils_*.R
-├── inst/
-│   ├── app/
-│   │   └── www/
-│   ├── extdata/
-│   └── golem-config.yml
-├── dev/
-│   └── run_dev.R
-├── tests/
-│   └── testthat/
-├── docs/
-└── .github/
-    └── workflows/
+## Error: `there is no package called 'remotes'`
+
+Install `remotes`:
+
+```r
+install.packages("remotes")
 ```
+
+Then repeat:
+
+```r
+remotes::install_github(
+  repo = "AOG-Lab/CalciumInsights",
+  dependencies = TRUE,
+  upgrade = "never"
+)
+```
+
+## Error: `there is no package called 'pkgload'`
+
+This error normally occurs when the application is being run from its source folder for development. Install `pkgload` with:
+
+```r
+install.packages("pkgload")
+```
+
+For a normal user installation, start the installed package instead:
+
+```r
+CalciumInsights::run_app()
+```
+
+## Error: `Failed to install 'CalciumInsights' from GitHub`
+
+First restart RStudio and run:
+
+```r
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+install.packages("remotes")
+
+remotes::install_github(
+  repo = "AOG-Lab/CalciumInsights",
+  dependencies = TRUE,
+  upgrade = "never",
+  force = TRUE
+)
+```
+
+If the error states that build tools are missing, install Rtools on Windows or the Apple Command Line Tools on macOS as described above.
+
+## Error: a dependency is missing
+
+Install all declared dependencies again:
+
+```r
+remotes::install_github(
+  repo = "AOG-Lab/CalciumInsights",
+  dependencies = TRUE,
+  upgrade = "never",
+  force = TRUE
+)
+```
+
+Or install a specific missing package:
+
+```r
+install.packages("PACKAGE_NAME", dependencies = TRUE)
+```
+
+## R cannot access CRAN
+
+Set the CRAN repository explicitly:
+
+```r
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+getOption("repos")
+```
+
+A firewall, proxy, institutional network, or antivirus configuration may block package downloads.
+
+## GitHub rate-limit or authentication error
+
+A public repository normally does not require a GitHub token. If GitHub reports a rate-limit error, create a GitHub personal access token and store it with the `gitcreds` package:
+
+```r
+install.packages("gitcreds")
+gitcreds::gitcreds_set()
+```
+
+Then repeat the GitHub installation.
+
+Do not place a personal access token directly in the README, source code, or a public repository.
+
+## The browser does not open automatically
+
+Run:
+
+```r
+CalciumInsights::run_app(launch.browser = TRUE)
+```
+
+When necessary, open the local address printed in the R console.
+
+## Port already in use
+
+Run the app on a different local port:
+
+```r
+CalciumInsights::run_app(port = 3839)
+```
+
+## The application opens but a data file is not accepted
+
+Confirm that:
+
+- The extension is `.csv` or `.tsv`.
+- The first column contains time.
+- The remaining analysis columns contain numeric values.
+- Column names are unique.
+- The delimiter matches the file content.
+
+## Report installation information
+
+When reporting an installation problem, include:
+
+```r
+sessionInfo()
+packageVersion("CalciumInsights")
+```
+
+Also include the complete error message and the operating system being used.
 
 ---
 
-# 10. Development and package checks
+# 10. Development checks
 
-These steps are optional and are intended for developers or repository maintainers.
+These steps are intended for developers and repository maintainers.
 
-Install `devtools`:
+Install the development tools:
 
 ```r
-install.packages("devtools")
+install.packages(c("devtools", "testthat", "pkgload"))
 ```
 
-Open `CalciumInsights.Rproj`, then run:
+Open `CalciumInsights.Rproj` and run:
 
 ```r
 devtools::document()
@@ -563,194 +504,27 @@ devtools::test()
 devtools::check()
 ```
 
-A standard local validation sequence is:
-
-```r
-pkgload::load_all()
-testthat::test_dir("tests/testthat")
-devtools::check()
-```
-
-Before publishing a new release:
+Before publishing a new version:
 
 1. Run the automated tests.
 2. Run `devtools::check()`.
-3. Start the app from the source folder.
-4. Start the installed package with `CalciumInsights::run_app()`.
-5. Test both active modules with included example data.
-6. Test at least one valid CSV or TSV file from the intended workflow.
-7. Confirm that tables and plots can be downloaded.
+3. Test `CalciumInsights::run_app()` from a clean R session.
+4. Test both active analysis modules.
+5. Test at least one valid CSV or TSV file.
+6. Confirm that tables and plots can be downloaded.
 
 ---
 
-# 11. Troubleshooting
+# 11. Repository
 
-## Error: `there is no package called 'pkgload'`
+Official repository:
 
-Run:
+<https://github.com/AOG-Lab/CalciumInsights>
 
-```r
-install.packages("pkgload")
-```
-
-Then:
-
-```r
-shiny::runApp()
-```
-
-## Error: one or more required packages are missing
-
-Run:
-
-```r
-source("install_dependencies.R")
-```
-
-Or install the missing package directly:
-
-```r
-install.packages("PACKAGE_NAME", dependencies = TRUE)
-```
-
-## Error: `DESCRIPTION` or `app.R` cannot be found
-
-The project was opened from the wrong folder.
-
-Open `CalciumInsights.Rproj`, or set the working directory to the folder that contains `DESCRIPTION`:
-
-```r
-setwd("PATH/TO/CalciumInsights")
-```
-
-Then verify:
-
-```r
-file.exists("DESCRIPTION")
-file.exists("app.R")
-```
-
-## Package installation fails on Windows
-
-1. Update R to a supported version.
-2. Restart RStudio.
-3. Install the matching Rtools version if R reports that compilation tools are required.
-4. Run:
-
-```r
-options(repos = c(CRAN = "https://cloud.r-project.org"))
-source("install_dependencies.R")
-```
-
-## Package installation fails on macOS
-
-Install the Apple Command Line Tools:
-
-```bash
-xcode-select --install
-```
-
-Restart RStudio and repeat:
-
-```r
-source("install_dependencies.R")
-```
-
-## Package installation fails on Linux
-
-Install the system requirements listed in the Linux section, restart R, and repeat:
-
-```r
-source("install_dependencies.R")
-```
-
-## R cannot access CRAN
-
-Set the repository explicitly:
-
-```r
-options(repos = c(CRAN = "https://cloud.r-project.org"))
-```
-
-Check the current setting:
-
-```r
-getOption("repos")
-```
-
-A firewall, proxy, institutional network, or antivirus configuration may also block downloads.
-
-## The application opens but an uploaded file is not accepted
-
-Confirm that:
-
-- The file extension is `.csv` or `.tsv`.
-- The first column contains time.
-- The remaining analysis columns contain numeric values.
-- Column names are unique.
-- The delimiter matches the file extension and content.
-
-## The browser does not open automatically
-
-Run the source launcher, then open the local URL printed in the R console:
-
-```r
-shiny::runApp(launch.browser = TRUE)
-```
-
-## Port already in use
-
-Run the app on another local port:
-
-```r
-shiny::runApp(port = 3839)
-```
-
-## Reset the R session
-
-In RStudio, select:
-
-```text
-Session > Restart R
-```
-
-Then run:
-
-```r
-source("install_dependencies.R")
-shiny::runApp()
-```
-
-## Report reproducibility information
-
-Include the output of the following command when reporting an installation problem:
-
-```r
-sessionInfo()
-```
-
-Also include the complete error message and the operating system being used.
+To report a problem or request a feature, use the repository's **Issues** section.
 
 ---
 
-# 12. Additional documentation
+# 12. License
 
-Additional project documents are available in the repository:
-
-- `MIGRATION_NOTES.md`
-- `VALIDATION_REPORT.md`
-- `GITHUB_UPLOAD_GUIDE.md`
-- `FILE_MANIFEST.csv`
-- `docs/`
-
----
-
-# 13. License
-
-The supplied source files did not specify a definitive open-source license. The current `LICENSE` file retains all rights until the copyright holder selects a distribution license.
-
-Before publishing the repository publicly, update:
-
-- `LICENSE`
-- The `License` field in `DESCRIPTION`
-- This README, when necessary
+CalciumInsights is distributed under the MIT License. See the `LICENSE` and `LICENSE.md` files included in the repository for the applicable terms.
