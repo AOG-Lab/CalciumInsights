@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CalciumInsights</title>
 
   <style>
     :root {
-      --primary-color: #337ab7;
-      --secondary-color: #66CCCC;
-      --dark-color: #1f2933;
-      --text-color: #4b5563;
-      --light-bg: #f5f8fb;
-      --card-bg: #ffffff;
-      --border-color: #dbeafe;
+      --primary: #337ab7;
+      --secondary: #66CCCC;
+      --dark: #1f2933;
+      --text: #4b5563;
+      --muted: #6b7280;
+      --bg: #f4f8fb;
+      --card: #ffffff;
+      --border: #dbeafe;
+      --soft-blue: #eef6ff;
+      --soft-cyan: #ecfeff;
+      --soft-gray: #f8fafc;
+      --warning: #fff7ed;
+      --warning-border: #fed7aa;
     }
 
     * {
@@ -25,208 +30,250 @@
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
       background: linear-gradient(135deg, #f5f8fb 0%, #eaf6f8 100%);
-      color: var(--text-color);
+      color: var(--text);
     }
 
-    .page-wrapper {
+    .page {
       min-height: 100vh;
-      padding: 40px 24px;
+      padding: 26px 18px;
       display: flex;
       justify-content: center;
       align-items: flex-start;
     }
 
-    .home-card {
+    .container {
       width: 100%;
-      max-width: 1100px;
-      background: var(--card-bg);
-      border-radius: 22px;
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+      max-width: 1080px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
       overflow: hidden;
-      border: 1px solid var(--border-color);
+      box-shadow: 0 12px 30px rgba(31, 41, 51, 0.08);
     }
 
     .hero {
-      padding: 45px 50px;
+      padding: 34px 42px 32px 42px;
       text-align: center;
-      background: linear-gradient(135deg, #ffffff 0%, #eef9fb 100%);
-      border-bottom: 1px solid var(--border-color);
+      background:
+        radial-gradient(circle at top left, rgba(102, 204, 204, 0.20), transparent 34%),
+        linear-gradient(135deg, #ffffff 0%, #eef9fb 100%);
+      border-bottom: 1px solid var(--border);
     }
 
     .logo {
-      max-width: 180px;
+      max-width: 135px;
       height: auto;
       display: block;
-      margin: 0 auto 20px auto;
+      margin: 0 auto 14px auto;
     }
 
-    .hero h1 {
-      margin: 0;
-      font-size: 42px;
-      color: var(--dark-color);
+    .badge {
+      display: inline-block;
+      padding: 6px 13px;
+      border-radius: 999px;
+      background: rgba(51, 122, 183, 0.10);
+      color: var(--primary);
+      font-size: 12px;
       font-weight: 700;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
     }
 
-    .hero .subtitle {
-      margin: 15px auto 0 auto;
-      max-width: 800px;
-      font-size: 18px;
-      line-height: 1.7;
-      color: var(--text-color);
+    h1 {
+      margin: 0;
+      color: var(--dark);
+      font-size: 38px;
+      line-height: 1.15;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      max-width: 790px;
+      margin: 13px auto 0 auto;
+      font-size: 16.5px;
+      line-height: 1.65;
+      color: var(--text);
     }
 
     .content {
-      padding: 40px 50px 50px 50px;
+      padding: 30px 42px 34px 42px;
+    }
+
+    .intro {
+      max-width: 910px;
+      margin: 0 auto 24px auto;
+      text-align: center;
+      font-size: 15.8px;
+      line-height: 1.7;
+      color: var(--text);
     }
 
     .section-title {
-      color: var(--dark-color);
-      font-size: 26px;
-      margin-top: 0;
-      margin-bottom: 15px;
+      margin: 0 0 16px 0;
+      color: var(--dark);
+      font-size: 22px;
       text-align: center;
+      font-weight: 700;
     }
 
-    .description {
-      max-width: 900px;
-      margin: 0 auto 35px auto;
-      font-size: 17px;
-      line-height: 1.8;
-      text-align: justify;
-    }
-
-    .features-grid {
+    .workflow {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-      margin-top: 30px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 30px;
     }
 
-    .feature-card {
-      background: #f9fcff;
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 24px;
+    .step {
+      background: var(--soft-gray);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 14px;
       text-align: center;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .feature-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(51, 122, 183, 0.12);
-    }
-
-    .feature-icon {
-      width: 52px;
-      height: 52px;
-      margin: 0 auto 14px auto;
+    .step-number {
+      width: 34px;
+      height: 34px;
+      margin: 0 auto 9px auto;
       border-radius: 50%;
-      background: rgba(102, 204, 204, 0.2);
-      color: var(--primary-color);
+      background: rgba(51, 122, 183, 0.12);
+      color: var(--primary);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 26px;
-      font-weight: bold;
-    }
-
-    .feature-card h3 {
-      margin: 8px 0 10px 0;
-      color: var(--dark-color);
-      font-size: 19px;
-    }
-
-    .feature-card p {
-      margin: 0;
+      font-weight: 700;
       font-size: 15px;
-      line-height: 1.6;
-      color: var(--text-color);
     }
 
-    .workflow-box {
-      margin-top: 42px;
-      background: #f3fbfc;
-      border-left: 5px solid var(--secondary-color);
-      border-radius: 14px;
-      padding: 25px 30px;
+    .step h3 {
+      margin: 0 0 7px 0;
+      color: var(--dark);
+      font-size: 15.5px;
     }
 
-    .workflow-box h2 {
-      margin-top: 0;
-      color: var(--dark-color);
-      font-size: 24px;
-    }
-
-    .workflow-box ol {
-      margin-bottom: 0;
-      padding-left: 22px;
-      line-height: 1.8;
-      font-size: 16px;
-    }
-
-    .cta-box {
-      margin-top: 40px;
-      padding: 28px;
-      text-align: center;
-      border-radius: 18px;
-      background: linear-gradient(135deg, #337ab7 0%, #66CCCC 100%);
-      color: #ffffff;
-    }
-
-    .cta-box h2 {
-      margin: 0 0 10px 0;
-      font-size: 26px;
-    }
-
-    .cta-box p {
+    .step p {
       margin: 0;
-      font-size: 16px;
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .modules {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-bottom: 26px;
+    }
+
+    .module-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 21px 22px;
+      background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+    }
+
+    .module-card h3 {
+      margin: 0 0 8px 0;
+      color: var(--dark);
+      font-size: 20px;
+    }
+
+    .module-card p {
+      margin: 0 0 12px 0;
+      font-size: 14.5px;
       line-height: 1.6;
-      color: #ffffff;
+    }
+
+    .module-card ul {
+      margin: 0;
+      padding-left: 19px;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .highlight-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-top: 8px;
+    }
+
+    .info-box {
+      border-radius: 15px;
+      padding: 18px 20px;
+      border-left: 5px solid var(--primary);
+      background: var(--soft-blue);
+    }
+
+    .info-box.cyan {
+      border-left-color: var(--secondary);
+      background: var(--soft-cyan);
+    }
+
+    .info-box h3 {
+      margin: 0 0 8px 0;
+      color: var(--dark);
+      font-size: 18px;
+    }
+
+    .info-box p {
+      margin: 0;
+      font-size: 14.5px;
+      line-height: 1.65;
+    }
+
+    .note {
+      margin-top: 22px;
+      background: var(--warning);
+      border: 1px solid var(--warning-border);
+      border-left: 5px solid #fb923c;
+      border-radius: 14px;
+      padding: 16px 18px;
+      font-size: 14.2px;
+      line-height: 1.6;
     }
 
     .footer {
-      padding: 18px 30px;
+      padding: 15px 25px;
       text-align: center;
-      font-size: 13px;
-      color: #6b7280;
+      font-size: 12.5px;
+      color: var(--muted);
       background: #f8fafc;
-      border-top: 1px solid var(--border-color);
+      border-top: 1px solid var(--border);
     }
 
     @media (max-width: 900px) {
-      .features-grid {
+      .workflow,
+      .modules,
+      .highlight-grid {
         grid-template-columns: 1fr;
       }
 
       .hero {
-        padding: 35px 25px;
+        padding: 30px 24px;
       }
 
-      .hero h1 {
-        font-size: 34px;
+      h1 {
+        font-size: 31px;
       }
 
       .content {
-        padding: 30px 25px 40px 25px;
+        padding: 26px 24px 30px 24px;
       }
     }
 
     @media (max-width: 600px) {
-      .page-wrapper {
-        padding: 20px 12px;
+      .page {
+        padding: 16px 10px;
       }
 
-      .hero h1 {
-        font-size: 28px;
+      h1 {
+        font-size: 27px;
       }
 
-      .hero .subtitle {
-        font-size: 16px;
-      }
-
-      .description {
+      .subtitle,
+      .intro {
         font-size: 15px;
       }
     }
@@ -234,77 +281,103 @@
 </head>
 
 <body>
-  <main class="page-wrapper">
-    <section class="home-card">
+  <main class="page">
+    <section class="container">
 
       <header class="hero">
-        <img src="images/logo.png" alt="CalciumInsights logo" class="logo">
-
-        <h1>Welcome to CalciumInsights</h1>
-
+        <img src="images/logo.png" alt="CalciumInsights logo" class="logo" />
+        <div class="badge">Calcium transient analysis platform</div>
+        <h1>CalciumInsights</h1>
         <p class="subtitle">
-          An interactive platform for denoising, visualizing, and quantifying calcium transient signals.
+          A compact and interactive Shiny application for calcium transient analysis using two complementary workflows: FFT-based peak detection and wavelet ridgewalking.
         </p>
       </header>
 
       <section class="content">
-        <h2 class="section-title">About the Application</h2>
-
-        <p class="description">
-          CalciumInsights is designed to support the analysis of calcium imaging signals through an interactive and user-friendly interface. 
-          The application allows users to upload calcium signal datasets, select specific regions of interest, apply signal smoothing methods, 
-          detect calcium transients, and extract relevant quantitative metrics such as peak amplitude, prominence, rise time, transient duration, 
-          full width at half maximum, and area under the curve.
+        <p class="intro">
+          CalciumInsights helps users load calcium imaging traces, select a region of interest, define baseline strategies, detect transient events, evaluate baseline sensitivity, and extract quantitative metrics such as amplitude, timing, frequency, FWHM, prominence, and area under the curve.
         </p>
 
-        <div class="features-grid">
-          <div class="feature-card">
-            <div class="feature-icon">1</div>
-            <h3>Signal Denoising</h3>
+        <h2 class="section-title">Analysis Workflow</h2>
+        <div class="workflow">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Load Data</h3>
+            <p>Use example data or upload a calcium trace dataset.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Select ROI</h3>
+            <p>Choose the region of interest to analyze.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Detect Events</h3>
+            <p>Apply FFT-based peak detection or wavelet ridgewalking.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">4</div>
+            <h3>Quantify Results</h3>
+            <p>Review event tables, plots, metrics, and baseline sensitivity.</p>
+          </div>
+        </div>
+
+        <h2 class="section-title">Main Analysis Modules</h2>
+        <div class="modules">
+          <div class="module-card">
+            <h3>FFT + Baseline Analysis</h3>
             <p>
-              Smooth calcium traces using frequency-based filtering methods while preserving the main morphology of the signal.
+              Peak-based analysis workflow for denoising, baseline selection, peak detection, and transient metric extraction.
+            </p>
+            <ul>
+              <li>FFT low-pass smoothing</li>
+              <li>Multiple baseline definitions</li>
+              <li>Peak detection and transient metrics</li>
+              <li>Baseline sensitivity analysis</li>
+            </ul>
+          </div>
+
+          <div class="module-card">
+            <h3>Wavelet Ridgewalking</h3>
+            <p>
+              Multiscale event-detection workflow designed to identify calcium events as ridge-like structures in a wavelet transform map.
+            </p>
+            <ul>
+              <li>Continuous wavelet transform map</li>
+              <li>Ridge-based event detection</li>
+              <li>Biological post-filtering</li>
+              <li>Wavelet-derived metrics and baseline sensitivity</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="highlight-grid">
+          <div class="info-box">
+            <h3>Why two detection methods?</h3>
+            <p>
+              FFT-based peak detection is intuitive for clear transient peaks, while wavelet ridgewalking can help detect broader or lower-amplitude events that may appear across multiple temporal scales.
             </p>
           </div>
 
-          <div class="feature-card">
-            <div class="feature-icon">2</div>
-            <h3>Transient Detection</h3>
+          <div class="info-box cyan">
+            <h3>Why baseline sensitivity matters</h3>
             <p>
-              Identify relevant peaks and calcium events using configurable parameters such as peak height, prominence, and minimum distance.
-            </p>
-          </div>
-
-          <div class="feature-card">
-            <div class="feature-icon">3</div>
-            <h3>Metric Extraction</h3>
-            <p>
-              Generate quantitative summaries for calcium dynamics, including amplitude, rise time, FWHM, FWHP, AUC, and frequency-related metrics.
+              Amplitude, area, and duration-related metrics can change depending on the baseline definition. CalciumInsights makes this sensitivity visible before interpreting biological conclusions.
             </p>
           </div>
         </div>
 
-        <div class="workflow-box">
-          <h2>Recommended Workflow</h2>
-
-          <ol>
-            <li>Upload your calcium signal dataset or use the example data provided in the app.</li>
-            <li>Select the region of interest that you want to analyze.</li>
-            <li>Adjust the denoising and peak detection parameters according to your signal behavior.</li>
-            <li>Review the calcium trace, detected peaks, derivative plots, and raw-versus-smoothed comparison.</li>
-            <li>Download the transient metrics, trace metrics, or calcium trace graph for reporting and further analysis.</li>
-          </ol>
-        </div>
-
-        <div class="cta-box">
-          <h2>Start Your Analysis</h2>
-          <p>
-            Use the navigation menu above and open the <strong>FFT Denoising Analysis</strong> section to begin analyzing your calcium traces.
-          </p>
+        <div class="note">
+          <strong>Current version note:</strong>
+          This home page reflects the active analysis structure of the app. The optional polynomial trend removal and the separate method-comparison panel are not presented as active Home features in this version.
         </div>
       </section>
 
       <footer class="footer">
-        CalciumInsights — Calcium Transient Analysis App
+        CalciumInsights · Interactive calcium transient analysis using FFT-based and wavelet-based workflows
       </footer>
 
     </section>

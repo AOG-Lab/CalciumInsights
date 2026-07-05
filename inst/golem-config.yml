@@ -1,8 +1,10 @@
 default:
   golem_name: CalciumInsights
-  golem_version: 0.0.1.000
+  golem_version: 0.1.0
   app_prod: no
+
 production:
   app_prod: yes
+
 dev:
-  golem_wd: !expr here::here()
+  app_prod: no
