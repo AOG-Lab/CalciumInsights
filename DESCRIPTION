@@ -13,7 +13,7 @@ Description: A modular Shiny application for interactive post-processing,
     quantification of calcium-imaging time-series data. The active workflows
     provide FFT-based denoising and baseline analysis and wavelet-based
     ridgewalking event detection.
-License: file LICENSE
+License: MIT + file LICENSE
 URL: https://github.com/AOG-Lab/CalciumInsights
 BugReports: https://github.com/AOG-Lab/CalciumInsights/issues
 Encoding: UTF-8
