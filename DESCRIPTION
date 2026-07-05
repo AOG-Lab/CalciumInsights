@@ -1,32 +1,63 @@
 Package: CalciumInsights
-Title: PKG_TITLE
-Version: 0.0.1.000
-Authors@R: person('Deiver', 'Suarez', email = 'deiver.suarez@upr.edu', role = c('cre', 'aut'))
-Description: It is an essential interactive tool for scientists and professionals in the fields of biology and neuroscience. This R package enhances the ability to discover patterns and relationships in calcium signal data, providing a profound understanding of underlying biological processes.
-License: What license is it under?
-Imports: 
+Title: Interactive Analysis of Calcium-Imaging Time Series
+Version: 0.1.0
+Authors@R: 
+    person(
+      given = "Deiver",
+      family = "Suarez",
+      email = "deiver.suarez@upr.edu",
+      role = c("aut", "cre")
+    )
+Description: A modular Shiny application for interactive post-processing,
+    visualization, event detection, baseline sensitivity analysis, and
+    quantification of calcium-imaging time-series data. The active workflows
+    provide FFT-based denoising and baseline analysis and wavelet-based
+    ridgewalking event detection.
+License: file LICENSE
+URL: https://github.com/AOG-Lab/CalciumInsights
+BugReports: https://github.com/AOG-Lab/CalciumInsights/issues
+Encoding: UTF-8
+LazyData: false
+Depends:
+    R (>= 4.1.0)
+Imports:
     config (>= 0.3.1),
     golem (>= 0.3.2),
     shiny (>= 1.7.2),
-    shinydashboard, 
     shinyjs,
-    ggplot2, 
-    DT, 
-    gridExtra, 
-    mdatools, 
+    DT,
+    ggplot2,
+    dplyr,
+    vroom,
+    jsonlite,
     pracma,
-    tidyverse,
-    dplyr, 
-    reshape2, 
-    refund, 
-    fda, 
-    fds,
-    reshape2, 
-    latex2exp, 
-    plotly, 
-    magrittr, 
-    png,
-    prospectr
-Encoding: UTF-8
-LazyData: true
+    prospectr,
+    latex2exp,
+    gridExtra,
+    htmltools
+Suggests:
+    pkgload,
+    testthat (>= 3.0.0),
+    remotes,
+    httpuv
+Config/testthat/edition: 3
 RoxygenNote: 7.3.2
+Collate:
+    'app_config.R'
+    'utils_load_file.R'
+    'utils_peaks.R'
+    'utils_Time_of_the_first_peak.R'
+    'utils_prominens2.R'
+    'utils_FWHP2.R'
+    'utils_response_time.R'
+    'utils_right_left_FWHP.R'
+    'utils_AUC2.R'
+    'utils_Savitzky_Golay.R'
+    'mod_fft_baseline_sensitivity.R'
+    'mod_wavelet_ridgewalking.R'
+    'mod_method_comparison.R'
+    'app_ui.R'
+    'app_server.R'
+    'run_app.R'
+    'zzz.R'
+    'CalciumInsights-package.R'

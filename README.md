@@ -1,195 +1,150 @@
-# CalciumInsights
+# CalciumInsights — versión golem actualizada
 
-**CalciumInsights** is an interactive application built in **R/Shiny** for the analysis, visualization, denoising, and quantification of calcium transient signals.
+CalciumInsights es una aplicación Shiny modular para el posprocesamiento,
+visualización, detección de eventos y cuantificación de series temporales de
+imágenes de calcio.
 
-The application provides tools to explore calcium traces, apply signal denoising methods, detect calcium transients, extract quantitative metrics, and export results for further analysis or reporting.
+Esta versión convierte la app `CalciumInsights_Modular_Fixed` en un paquete
+[golem](https://thinkr-open.github.io/golem/) listo para desarrollarse en
+RStudio, almacenarse en GitHub e instalarse localmente como paquete de R.
 
-![CalciumInsights overview](figures/CI_description.png)
+## Módulos activos
 
----
+1. **FFT + Baseline Analysis**
+   - Suavizado FFT pasa-bajas.
+   - Detección de picos.
+   - Varias definiciones de línea base.
+   - Análisis de sensibilidad a la línea base.
+   - Métricas por evento y por traza.
+   - AUC y modelos sigmoidales opcionales.
+   - Tablas y gráficas descargables.
 
-## Main Features
+2. **Wavelet Ridgewalking**
+   - Detección multiescala con wavelet Ricker/Mexican hat.
+   - Construcción y filtrado de ridges.
+   - Corrección de línea base posterior a la detección.
+   - Métricas por evento y resumen.
+   - AUC y modelos sigmoidales opcionales.
+   - Tablas y gráficas descargables.
 
-CalciumInsights allows users to:
+El archivo `R/mod_method_comparison.R` se conserva como en la app fuente, pero
+el módulo permanece desactivado en la interfaz y el servidor.
 
-- Upload calcium signal datasets.
-- Use an example dataset included with the application.
-- Select a specific region of interest (ROI) for analysis.
-- Apply FFT-based denoising to calcium traces.
-- Detect calcium transient peaks using user-defined parameters.
-- Estimate calcium transient metrics, including amplitude, prominence, rise time, FWHP, FWHM, and AUC.
-- Visualize raw and denoised traces.
-- Explore Fourier-based signal reconstruction and frequency-domain summaries.
-- Download trace metrics, transient metrics, and calcium trace graphs.
+## Requisitos
 
----
+- R 4.1.0 o una versión posterior.
+- RStudio Desktop es recomendado, aunque no obligatorio.
+- Conexión a internet durante la primera instalación de dependencias.
 
-## Installation Requirements
+## Ejecutar desde una carpeta descargada o clonada
 
-Before installing CalciumInsights from GitHub, make sure the following programs are installed on your computer:
-
-### 1. R
-
-Download and install R from:
-
-<[https://cran.r-project.org/](https://aog-lab.github.io/fft-denoising-app-user-guide/)>
-
-### 2. RStudio
-
-Download and install RStudio Desktop from:
-
-<https://posit.co/download/rstudio-desktop/>
-
-### 3. Git
-
-Git is recommended for installing the application directly from GitHub.
-
-Download and install Git from:
-
-<https://git-scm.com/downloads>
-
-To check whether Git is already installed, open the terminal and run:
-
-```bash
-git --version
-```
-
----
-
-## Required R Packages
-
-The following R packages are required by CalciumInsights:
+1. Descargue o clone el repositorio.
+2. Abra `CalciumInsights.Rproj` en RStudio.
+3. En la consola de R ejecute:
 
 ```r
-install.packages(c(
-  "remotes",
-  "config",
-  "golem",
-  "shiny",
-  "shinydashboard",
-  "shinyjs",
-  "ggplot2",
-  "DT",
-  "gridExtra",
-  "pracma",
-  "tidyverse",
-  "dplyr",
-  "reshape2",
-  "refund",
-  "fda",
-  "fds",
-  "latex2exp",
-  "plotly",
-  "magrittr",
-  "png",
-  "prospectr",
-  "vroom",
-  "jsonlite"
-))
+source("install_dependencies.R")
+shiny::runApp()
 ```
 
-> Note: If the `DESCRIPTION` file of the package is correctly configured, most dependencies will be installed automatically when installing the app from GitHub.
+`shiny::runApp()` utiliza el archivo `app.R` del repositorio, carga el paquete
+en modo de desarrollo y abre la aplicación.
 
----
+También puede ejecutar:
 
-## Installing CalciumInsights from GitHub
+```r
+source("dev/run_dev.R")
+```
 
-The following command only needs to be run the first time you install the app:
+## Instalar directamente desde GitHub
+
+Después de publicar el contenido de esta carpeta en un repositorio:
 
 ```r
 install.packages("remotes")
-```
-
-Then install CalciumInsights directly from GitHub:
-
-```r
 remotes::install_github("AOG-Lab/CalciumInsights")
+CalciumInsights::run_app()
 ```
 
----
+Si usa otro propietario o nombre de repositorio, sustituya
+`AOG-Lab/CalciumInsights` por `PROPIETARIO/REPOSITORIO`.
 
-## Running the Application
+## Instalar el paquete desde una copia local
 
-After installation, load the package and run the app:
+Desde la carpeta que contiene `DESCRIPTION`:
 
 ```r
-library(CalciumInsights)
-
-run_app()
+install.packages("remotes")
+remotes::install_local(".", dependencies = TRUE, upgrade = "never")
+CalciumInsights::run_app()
 ```
 
-The application will open locally in your default web browser or in the RStudio Viewer pane.
+## Formato de los datos
 
----
+La aplicación acepta:
 
-## Basic Workflow
+- `.csv`
+- `.tsv`
 
-A typical CalciumInsights workflow is:
+La primera columna se interpreta como tiempo. Las columnas siguientes se
+interpretan como señales de regiones de interés (ROI). La app no realiza
+segmentación de imágenes ni extracción de ROI desde imágenes microscópicas.
 
-1. Open the application using `run_app()`.
-2. Upload your calcium signal dataset or use the example data.
-3. Select the region of interest to analyze.
-4. Adjust the FFT denoising and peak detection parameters.
-5. Review the calcium trace, detected peaks, and metric plots.
-6. Download the resulting metrics and figures.
+Los archivos de ejemplo incluidos se encuentran en `inst/extdata`. Una vez
+instalado el paquete, su ubicación puede consultarse con:
 
----
+```r
+system.file("extdata", package = "CalciumInsights")
+```
 
-## Input Data Format
+## Estructura principal
 
-The input dataset should contain a time column followed by one or more calcium signal columns corresponding to different regions of interest.
+```text
+CalciumInsights/
+├── app.R
+├── DESCRIPTION
+├── NAMESPACE
+├── R/
+│   ├── app_ui.R
+│   ├── app_server.R
+│   ├── run_app.R
+│   ├── mod_fft_baseline_sensitivity.R
+│   ├── mod_wavelet_ridgewalking.R
+│   └── utils_*.R
+├── inst/
+│   ├── app/www/
+│   ├── extdata/
+│   └── golem-config.yml
+├── dev/run_dev.R
+├── tests/testthat/
+└── docs/
+```
 
-Example structure:
+## Verificaciones recomendadas antes de publicar
 
-| Time | ROI_1 | ROI_2 | ROI_3 |
-|------|-------|-------|-------|
-| 0.0  | 0.15  | 0.21  | 0.18  |
-| 0.5  | 0.18  | 0.25  | 0.20  |
-| 1.0  | 0.22  | 0.28  | 0.24  |
+Desde RStudio:
 
-The first column should represent time, and the remaining columns should represent calcium traces for each ROI.
+```r
+devtools::document()
+devtools::test()
+devtools::check()
+```
 
----
+Luego pruebe ambos módulos con los datos simulados incluidos en la interfaz y
+con al menos un archivo CSV real.
 
-## Output Files
+## Documentación adicional
 
-CalciumInsights allows users to download:
+Los documentos suministrados con la app actual se conservaron en `docs/`.
+Consulte también:
 
-- Trace-level metrics.
-- Transient-level metrics.
-- Calcium trace graphs.
-- Tables summarizing detected peaks and signal characteristics.
+- `MIGRATION_NOTES.md`
+- `VALIDATION_REPORT.md`
+- `FILE_MANIFEST.csv`
 
----
+## Licencia
 
-## Notes
-
-The current version of CalciumInsights focuses on FFT-based denoising and calcium transient analysis. The app is designed to support interactive exploration of calcium signals and facilitate reproducible quantitative analysis.
-
----
-
-## User Guide
-
-A detailed user guide for CalciumInsights is available at:
-
-[https://github.com/AOG-Lab/fft-denoising-app-user-guide](https://aog-lab.github.io/fft-denoising-app-user-guide/)
-
-This guide provides additional information about how to use the application, including data upload, FFT-based denoising, parameter selection, calcium transient detection, metric interpretation, and result export.
-
----
-
-## Citation
-
-If you use CalciumInsights in your research, please cite the application or related manuscript when available.
-
----
-
-## Authors
-
-Developed by Deiver Suárez, Norma Pérez, Gabriel Miranda, and Santiago Colom.
-
-Repository:
-
-<https://github.com/AOG-Lab/CalciumInsights>
-
-
+Los archivos suministrados no especificaban una licencia de código definitiva.
+El archivo `LICENSE` conserva todos los derechos hasta que el titular seleccione
+una licencia. Antes de distribuir públicamente el repositorio, sustituya ese
+archivo y actualice el campo `License` de `DESCRIPTION`.
