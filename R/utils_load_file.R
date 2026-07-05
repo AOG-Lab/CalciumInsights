@@ -1,4 +1,4 @@
-options(shiny.maxRequestSize = 200 * 1024 * 1024)  # Establece el tamaño máximo a 30 MB
+# File import helper used by both active modules.
 load_file <- function(name, path, ext) {
   ext <- tools::file_ext(name)
   switch(ext,

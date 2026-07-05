@@ -1,12 +1,13 @@
-#' Run the Shiny Application
+#' Run the CalciumInsights Shiny application
 #'
-#' @param ... arguments to pass to golem_opts.
-#' See `?golem::get_golem_options` for more details.
-#' @inheritParams shiny::shinyApp
+#' @param onStart Optional function called before the application starts.
+#' @param options Named list of options passed to [shiny::shinyApp()].
+#' @param enableBookmarking Bookmarking mode.
+#' @param uiPattern URL pattern for the application.
+#' @param ... Values stored as golem options.
 #'
+#' @return A Shiny application object, normally run interactively.
 #' @export
-#' @importFrom shiny shinyApp
-#' @importFrom golem with_golem_options
 run_app <- function(
   onStart = NULL,
   options = list(),
@@ -14,8 +15,16 @@ run_app <- function(
   uiPattern = "/",
   ...
 ) {
-  with_golem_options(
-    app = shinyApp(
+  current_limit <- getOption("shiny.maxRequestSize", 0)
+  requested_limit <- 200 * 1024 * 1024
+
+  if (!is.numeric(current_limit) || length(current_limit) != 1L ||
+      !is.finite(current_limit) || current_limit < requested_limit) {
+    base::options(shiny.maxRequestSize = requested_limit)
+  }
+
+  golem::with_golem_options(
+    app = shiny::shinyApp(
       ui = app_ui,
       server = app_server,
       onStart = onStart,

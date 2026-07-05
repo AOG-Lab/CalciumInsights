@@ -1,13 +1,9 @@
 response_time <- function(data, peak, Puntos_medios){
-  library(dplyr)
-
-  filtered_firts <- data %>%
-    filter(data[,1] <= data[,1][peak[1,2]], data[,2]>= Puntos_medios[1,2], peak[1,1] >= data[,2])
+  filtered_firts <- dplyr::filter(data, data[,1] <= data[,1][peak[1,2]], data[,2]>= Puntos_medios[1,2], peak[1,1] >= data[,2])
 
   ultimo_peak <- length(peak[,1])
 
-  filtered_second <- data %>%
-    filter(data[,1] >= data[,1][peak[ultimo_peak,2]], data[,2] >= Puntos_medios[ultimo_peak,2], peak[ultimo_peak,1] >= data[,2])
+  filtered_second <- dplyr::filter(data, data[,1] >= data[,1][peak[ultimo_peak,2]], data[,2] >= Puntos_medios[ultimo_peak,2], peak[ultimo_peak,1] >= data[,2])
 
 
   MCO <- function(M1,M2){

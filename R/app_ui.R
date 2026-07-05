@@ -1,24 +1,21 @@
-#' Add external resources to the application
+#' Add external resources used by the application
 #'
-#' @import shiny
-#' @importFrom golem favicon bundle_resources
 #' @noRd
 golem_add_external_resources <- function() {
+  www_path <- app_sys("app", "www")
 
-  addResourcePath(
-    prefix = "www",
-    directoryPath = app_sys("app/www")
-  )
+  if (!nzchar(www_path) || !dir.exists(www_path)) {
+    stop(
+      "CalciumInsights web resources were not found. ",
+      "Reinstall the package from a complete source checkout.",
+      call. = FALSE
+    )
+  }
 
-  tags$head(
-    favicon(),
+  shiny::addResourcePath(prefix = "www", directoryPath = www_path)
 
-    bundle_resources(
-      path = app_sys("app/www"),
-      app_title = "CalciumInsights"
-    ),
-
-    tags$style(HTML("
+  shiny::tags$head(
+    shiny::tags$style(shiny::HTML("
       body {
         background-color: #ffffff;
       }
@@ -39,47 +36,69 @@ golem_add_external_resources <- function() {
   )
 }
 
-
-#' The application User-Interface
+#' CalciumInsights user interface
 #'
-#' @param request Internal parameter for `{shiny}`.
-#'     DO NOT REMOVE.
-#' @import shiny
+#' @param request Internal parameter supplied by Shiny.
 #' @noRd
 app_ui <- function(request) {
-
-  options(
-    spinner.color = "#337ab7",
-    spinner.color.background = "#ffffff",
-    spinner.size = 2
-  )
-
-  tagList(
+  shiny::tagList(
     golem_add_external_resources(),
 
-    fluidPage(
-      navbarPage(
-        title = "CalciumInsights",
-        id = "main_navbar",
-        collapsible = TRUE,
+    shiny::navbarPage(
+      title = "CalciumInsights",
+      id = "main_navbar",
+      theme = NULL,
+      selected = "home",
 
-        tabPanel(
-          title = "Home",
-          icon = icon("home"),
-          tags$iframe(
-            src = "www/index.html",
-            height = "900px",
-            width = "100%",
-            style = "border: none;"
-          )
-        ),
+      header = shiny::tagList(
+        shinyjs::useShinyjs(),
 
-        tabPanel(
-          title = "FFT Denoising Analysis",
-          icon = icon("chart-line"),
-          mod_Denoising_data_ui("Denoising_data_1")
+        shiny::tags$script(shiny::HTML("
+          $(document).on('shiny:connected', function() {
+
+            // Hide the Home tab from the visible navigation menu
+            $('a[data-value=\"home\"]').parent().hide();
+
+            // Make the CalciumInsights brand behave as the Home button
+            $('.navbar-brand').on('click', function(e) {
+              e.preventDefault();
+
+              // Activate the hidden Home tab
+              $('a[data-value=\"home\"]').tab('show');
+
+              // Update Shiny navbar input value
+              Shiny.setInputValue('main_navbar', 'home', {priority: 'event'});
+            });
+
+          });
+        "))
+      ),
+
+      shiny::tabPanel(
+        title = "Home",
+        value = "home",
+        shiny::tags$iframe(
+          src = "www/index.html?v=20260521",
+          width = "100%",
+          height = "950px",
+          style = "border: none;"
         )
+      ),
+
+      shiny::tabPanel(
+        title = "FFT + Baseline Analysis",
+        value = "fft",
+        mod_Denoising_data_fft_ui("fft_module")
+      ),
+
+      shiny::tabPanel(
+        title = "Wavelet Ridgewalking",
+        value = "wavelet",
+        mod_wavelet_ridgewalking_ui("wavelet_module")
       )
+
+      # The Method Comparison module remains intentionally inactive,
+      # matching the current standalone Shiny app.
     )
   )
 }
