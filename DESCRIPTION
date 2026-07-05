@@ -1,15 +1,15 @@
 Package: CalciumInsights
 Title: Interactive Analysis of Calcium-Imaging Time Series
 Version: 0.1.0
-Authors@R: 
+Authors@R:
     person(
-      given = "Deiver",
-      family = "Suarez",
-      email = "deiver.suarez@upr.edu",
-      role = c("aut", "cre")
+        given = "Deiver",
+        family = "Suarez",
+        email = "deiver.suarez@upr.edu",
+        role = c("aut", "cre")
     )
 Description: A modular Shiny application for interactive post-processing,
-    visualization, event detection, baseline sensitivity analysis, and
+    visualization, event detection, baseline-sensitivity analysis, and
     quantification of calcium-imaging time-series data. The active workflows
     provide FFT-based denoising and baseline analysis and wavelet-based
     ridgewalking event detection.
@@ -22,42 +22,23 @@ Depends:
     R (>= 4.1.0)
 Imports:
     config (>= 0.3.1),
-    golem (>= 0.3.2),
-    shiny (>= 1.7.2),
-    shinyjs,
+    dplyr,
     DT,
     ggplot2,
-    dplyr,
-    vroom,
+    golem (>= 0.3.2),
+    gridExtra,
+    htmltools,
     jsonlite,
+    latex2exp,
     pracma,
     prospectr,
-    latex2exp,
-    gridExtra,
-    htmltools
+    shiny (>= 1.7.2),
+    shinyjs,
+    vroom
 Suggests:
+    httpuv,
     pkgload,
-    testthat (>= 3.0.0),
     remotes,
-    httpuv
+    testthat (>= 3.0.0)
 Config/testthat/edition: 3
 RoxygenNote: 7.3.2
-Collate:
-    'app_config.R'
-    'utils_load_file.R'
-    'utils_peaks.R'
-    'utils_Time_of_the_first_peak.R'
-    'utils_prominens2.R'
-    'utils_FWHP2.R'
-    'utils_response_time.R'
-    'utils_right_left_FWHP.R'
-    'utils_AUC2.R'
-    'utils_Savitzky_Golay.R'
-    'mod_fft_baseline_sensitivity.R'
-    'mod_wavelet_ridgewalking.R'
-    'mod_method_comparison.R'
-    'app_ui.R'
-    'app_server.R'
-    'run_app.R'
-    'zzz.R'
-    'CalciumInsights-package.R'
