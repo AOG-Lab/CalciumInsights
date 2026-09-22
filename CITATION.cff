@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use CalciumInsights, please cite this software using the metadata below."
+title: "CalciumInsights"
+type: software
+authors:
+  - given-names: "Deiver"
+    family-names: "Suarez-Gomez"
+  - given-names: "Norma C"
+    family-names: "Perez-Rosas"
+  - given-names: "Gabriel I"
+    family-names: "Miranda-Contreras"
+  - given-names: "Santiago R"
+    family-names: "Colom-Braña"
+repository-code: "https://github.com/AOG-Lab/CalciumInsights"
+abstract: "CalciumInsights is a modular R Shiny application for post-processing, visualization, event detection, baseline-sensitivity analysis, and quantification of calcium-imaging time-series data."
+keywords:
+  - "calcium imaging"
+  - "R Shiny"
+  - "time-series analysis"
+  - "event detection"
+  - "baseline sensitivity"
+  - "FFT"
+  - "wavelet analysis"
