@@ -1,16 +1,25 @@
 cff-version: 1.2.0
-message: "If you use CalciumInsights, please cite this software using the metadata below."
+message: "If you use this software, please cite it using the metadata in this file."
 title: "CalciumInsights"
 type: software
+
 authors:
   - given-names: "Deiver"
     family-names: "Suarez-Gomez"
+    affiliation: "Graduate Program in Bioengineering, University of Puerto Rico at Mayagüez, Mayagüez, PR, USA; Department of Mathematical Sciences, University of Puerto Rico at Mayagüez, Mayagüez, PR, USA"
+
   - given-names: "Norma C"
     family-names: "Perez-Rosas"
+    affiliation: "School of Mechanical Engineering, Purdue University, West Lafayette, IN, USA; Janelia Research Campus, Howard Hughes Medical Institute, Ashburn, VA, USA; Centro de Investigación y de Estudios Avanzados del IPN, CDMX, Mexico"
+
   - given-names: "Gabriel I"
     family-names: "Miranda-Contreras"
+    affiliation: "Departamento de Ingeniería Química y Bioprocesos, Escuela de Ingeniería, Pontificia Universidad Católica de Chile, Santiago, Chile"
+
   - given-names: "Santiago R"
     family-names: "Colom-Braña"
+    affiliation: "Department of Mathematics, University of Puerto Rico at Mayagüez, Mayagüez, PR, USA"
+
 repository-code: "https://github.com/AOG-Lab/CalciumInsights"
 abstract: "CalciumInsights is a modular R Shiny application for post-processing, visualization, event detection, baseline-sensitivity analysis, and quantification of calcium-imaging time-series data."
 keywords:
